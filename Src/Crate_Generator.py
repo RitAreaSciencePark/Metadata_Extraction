@@ -479,7 +479,7 @@ def generate_folder_rocrate(input_folder):
                         ),
                         "creator": {"@id": lage.id},
                         "datePublished": datetime.datetime.now().date().isoformat(),
-                        # FIX 4: standard MIME type as plain string
+                        #  standard MIME type as plain string
                         "encodingFormat": "application/json",
                         "humanReadableSize": readable_size,
                         "wasGeneratedBy": {"@id": history_tool.id},
@@ -652,7 +652,7 @@ def generate_folder_rocrate(input_folder):
                 if assigned_run:
                     # Keep actionProcess on file for backward compatibility
                     file_props["actionProcess"] = {"@id": assigned_run.id}
-                    # FIX 2: accumulate for result[] on the activity
+                    #  accumulate for result[] on the activity
                     if assigned_run.id in activity_results:
                         activity_results[assigned_run.id].append({"@id": rel_path})
                     print(f" File Identified & Assigned: {rel_path} -> {assigned_run.id}")
