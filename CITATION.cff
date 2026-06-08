@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "Metadata Extraction and JSON Export Pipeline for LAGE Sequencing Data"
+abstract: >
+  A modular, open-source Python pipeline for automated extraction,
+  normalisation, and FAIR-compliant packaging of sequencing metadata.
+  The pipeline supports content-based file detection across eleven
+  instrument-native formats, sample lineage reconstruction, and
+  RO-Crate 1.2 dataset packaging serialised in JSON-LD.
+authors:
+  - family-names: Tsoptio Fougang
+    given-names: Lesly
+    affiliation: "SISSA & Area Science Park, Trieste, Italy"
+repository-code: "https://github.com/RitAreaSciencePark/LAGE_Metadata_Extraction"
+license: MIT
+version: "1.0.0"
+date-released: "2026-06-18"
+keywords:
+  - FAIR data
+  - metadata extraction
+  - RO-Crate
+  - sequencing
+  - JSON-LD
+  - genomics
+  - data management
