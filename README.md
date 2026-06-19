@@ -900,6 +900,8 @@ Master Thesis — SISSA / Area Science Park.
 
 This project is distributed under the **MIT License**.  
 
+cite the code : [![DOI](https://zenodo.org/badge/1144429762.svg)](https://doi.org/10.5281/zenodo.20764267)
+
 ---
 
 ## Authors

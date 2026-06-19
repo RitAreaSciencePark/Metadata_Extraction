@@ -200,7 +200,7 @@ def process_all_csv_files(input_dir_path, output_dir_path):
 
         file_info = {
             'instrument_type': 'Illumina_iScan',
-            'phase_workflow': 'sequencing',
+            'phase_workflow': 'Sequencing',
             'file_name': csv_file_name,
             'file_path': file_Input_path,
             'file_description': 'BeadStudio sample sheet containing array scanning configuration and per-sample metadata.',
