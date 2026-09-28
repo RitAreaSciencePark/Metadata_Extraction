@@ -2,13 +2,17 @@
 """
 Pipeline Performance Benchmark Script
 ======================================
-Measures the six metrics requested by the thesis referee:
+Reports only metrics that are genuinely measured at runtime. Metrics that
+would require an external ground truth (extraction accuracy) or a fixed
+human-time assumption (manual-effort reduction) have been removed, because
+they cannot be evaluated from a pipeline run alone.
+
+Measured metrics:
   1. Processing time per dataset
-  2. Number of files processed per second
-  3. Reduction in manual effort (before vs after)
-  4. Extraction accuracy (matched vs misclassified)
-  5. Metadata completeness (null/NaN field analysis)
-  6. Failure rate across file types
+  2. Number of files processed per second (throughput)
+  3. Metadata completeness (top-field presence and null/NaN analysis)
+  4. Failure rate across file types (derived from the pipeline return code,
+     captured stderr, and matched-vs-input file counts)
 
 Usage:
     python benchmark_pipeline.py \
@@ -58,8 +62,8 @@ def count_files_by_extension(directory):
 
 def run_pipeline(pipeline_script, input_dir, output_dir):
     """
-    Run the pipeline and capture timing + stdout.
-    Returns (elapsed_seconds, stdout_text, return_code).
+    Run the pipeline and capture timing + output.
+    Returns (elapsed_seconds, stdout_text, stderr_text, return_code).
     """
     # Clean output directory
     if os.path.exists(output_dir):
@@ -101,6 +105,8 @@ def analyse_json_outputs(output_dir):
         "files_with_all_top_fields": 0,
         "files_missing_top_fields": 0,
         "missing_fields_detail": [],
+        "parse_errors": 0,
+        "parse_error_detail": [],
         "null_nan_count": 0,
         "null_nan_fields": [],
         "total_fields_checked": 0,
@@ -122,6 +128,11 @@ def analyse_json_outputs(output_dir):
             with open(jf, "r", encoding="utf-8") as f:
                 data = json.load(f)
         except (json.JSONDecodeError, UnicodeDecodeError) as e:
+            results["parse_errors"] += 1
+            results["parse_error_detail"].append({
+                "file": str(jf.name),
+                "error": str(e)
+            })
             results["files_analysed"].append({
                 "file": str(jf.name),
                 "status": "parse_error",
@@ -215,7 +226,7 @@ def count_nulls_recursive(obj, path=""):
 
 def generate_report(dataset_name, input_dir, output_dir,
                     elapsed, total_input_files, ext_counts,
-                    json_analysis, return_code):
+                    json_analysis, stderr_text, return_code):
     """Generate a structured benchmark report for one dataset."""
     matched = json_analysis["total_json_files"]
     skipped = total_input_files - matched
@@ -225,6 +236,15 @@ def generate_report(dataset_name, input_dir, output_dir,
     if json_analysis["total_fields_checked"] > 0:
         non_null = json_analysis["total_fields_checked"] - json_analysis["null_nan_count"]
         completeness_pct = (non_null / json_analysis["total_fields_checked"]) * 100
+
+    # Failure rate is derived from real signals captured during the run:
+    #   - a non-zero pipeline return code,
+    #   - non-empty stderr,
+    #   - JSON outputs that failed to parse.
+    # A run is counted as failed if the process did not exit cleanly.
+    pipeline_failed = (return_code != 0)
+    parse_errors = json_analysis["parse_errors"]
+    stderr_lines = [ln for ln in (stderr_text or "").splitlines() if ln.strip()]
 
     report = {
         "dataset": dataset_name,
@@ -243,23 +263,7 @@ def generate_report(dataset_name, input_dir, output_dir,
                 "files_skipped": skipped,
                 "files_per_second": round(files_per_second, 2),
             },
-            "3_manual_effort_comparison": {
-                "estimated_manual_minutes_per_file": 5,
-                "estimated_manual_total_minutes": total_input_files * 5,
-                "estimated_manual_total_hours": round((total_input_files * 5) / 60, 1),
-                "pipeline_seconds": round(elapsed, 1),
-                "speedup_factor": round((total_input_files * 5 * 60) / elapsed, 0) if elapsed > 0 else "N/A",
-                "note": "Manual estimate: ~5 min/file for opening, identifying, extracting, and recording metadata fields"
-            },
-            "4_extraction_accuracy": {
-                "files_processed": total_input_files,
-                "files_matched": matched,
-                "files_skipped": skipped,
-                "misclassifications": 0,
-                "accuracy_pct": 100.0,
-                "note": "No misclassification observed: every matched file produced valid output"
-            },
-            "5_metadata_completeness": {
+            "3_metadata_completeness": {
                 "json_files_produced": json_analysis["total_json_files"],
                 "files_with_all_5_top_fields": json_analysis["files_with_all_top_fields"],
                 "files_missing_top_fields": json_analysis["files_missing_top_fields"],
@@ -270,12 +274,14 @@ def generate_report(dataset_name, input_dir, output_dir,
                 "missing_fields_detail": json_analysis["missing_fields_detail"][:10],
                 "null_fields_detail": json_analysis["null_nan_fields"][:10],
             },
-            "6_failure_rate": {
+            "4_failure_rate": {
                 "input_file_types": ext_counts,
                 "total_input_files": total_input_files,
-                "files_causing_errors": 0,
-                "failure_rate_pct": 0.0,
-                "note": "No file caused a pipeline crash. Unrecognised files were skipped gracefully."
+                "pipeline_return_code": return_code,
+                "pipeline_failed": pipeline_failed,
+                "json_parse_errors": parse_errors,
+                "stderr_line_count": len(stderr_lines),
+                "stderr_sample": stderr_lines[:10],
             },
         }
     }
@@ -301,24 +307,18 @@ def print_summary(report):
     print(f"     Matched:               {tp['files_matched']}")
     print(f"     Skipped:               {tp['files_skipped']}")
 
-    me = m["3_manual_effort_comparison"]
-    print(f"  3. Manual effort saved:   {me['estimated_manual_total_hours']}h manual vs {me['pipeline_seconds']}s automated")
-    print(f"     Speedup factor:        {me['speedup_factor']}x")
-
-    acc = m["4_extraction_accuracy"]
-    print(f"  4. Extraction accuracy:   {acc['accuracy_pct']}%")
-    print(f"     Misclassifications:    {acc['misclassifications']}")
-
-    comp = m["5_metadata_completeness"]
-    print(f"  5. Metadata completeness: {comp['completeness_pct']}%")
+    comp = m["3_metadata_completeness"]
+    print(f"  3. Metadata completeness: {comp['completeness_pct']}%")
     print(f"     JSON files produced:   {comp['json_files_produced']}")
     print(f"     All 5 top fields:      {comp['files_with_all_5_top_fields']}")
     print(f"     Null/NaN values:       {comp['null_or_nan_values']}")
     print(f"     Samples extracted:     {comp['total_samples_extracted']}")
 
-    fr = m["6_failure_rate"]
-    print(f"  6. Failure rate:          {fr['failure_rate_pct']}%")
-    print(f"     Errors:                {fr['files_causing_errors']}")
+    fr = m["4_failure_rate"]
+    print(f"  4. Failure signals:       return code {fr['pipeline_return_code']}, "
+          f"{fr['json_parse_errors']} parse error(s), "
+          f"{fr['stderr_line_count']} stderr line(s)")
+    print(f"     Pipeline failed:       {fr['pipeline_failed']}")
 
     print(f"{'='*60}\n")
 
@@ -349,7 +349,7 @@ def run_benchmark(pipeline_script, input_dir, output_dir, dataset_name):
     report = generate_report(
         dataset_name, input_dir, output_dir,
         elapsed, total_files, ext_counts,
-        json_analysis, rc
+        json_analysis, stderr, rc
     )
 
     # Print summary
@@ -436,17 +436,17 @@ def main():
         print(f"  COMBINED SUMMARY")
         print(f"{'='*70}")
         print(f"  {'Dataset':<12} {'Files':>6} {'Time':>8} "
-              f"{'Files/s':>8} {'Accuracy':>9} {'Complete':>9}")
+              f"{'Files/s':>8} {'Complete':>9} {'Failed':>7}")
         print(f"  {'-'*12} {'-'*6} {'-'*8} "
-              f"{'-'*8} {'-'*9} {'-'*9}")
+              f"{'-'*8} {'-'*9} {'-'*7}")
         for r in all_reports:
             m = r["metrics"]
             print(f"  {r['dataset']:<12} "
                   f"{m['2_throughput']['total_input_files']:>6} "
                   f"{m['1_processing_time']['elapsed_formatted']:>8} "
                   f"{m['2_throughput']['files_per_second']:>8.1f} "
-                  f"{m['4_extraction_accuracy']['accuracy_pct']:>8.1f}% "
-                  f"{m['5_metadata_completeness']['completeness_pct']:>8.1f}%")
+                  f"{m['3_metadata_completeness']['completeness_pct']:>8.1f}% "
+                  f"{str(m['4_failure_rate']['pipeline_failed']):>7}")
         print(f"{'='*70}\n")
 
 

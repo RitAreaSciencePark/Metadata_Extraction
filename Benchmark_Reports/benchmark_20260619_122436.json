@@ -1,0 +1,118 @@
+[
+  {
+    "dataset": "ORID0036",
+    "input_directory": "./Input/ORID0036",
+    "output_directory": "./Output/Benchmark_ORID0036",
+    "timestamp": "2026-06-19T12:24:36.580054",
+    "pipeline_return_code": 0,
+    "metrics": {
+      "1_processing_time": {
+        "elapsed_seconds": 0.8,
+        "elapsed_formatted": "0m 0.8s"
+      },
+      "2_throughput": {
+        "total_input_files": 84,
+        "files_matched": 42,
+        "files_skipped": 42,
+        "files_per_second": 105.01
+      },
+      "3_manual_effort_comparison": {
+        "estimated_manual_minutes_per_file": 5,
+        "estimated_manual_total_minutes": 420,
+        "estimated_manual_total_hours": 7.0,
+        "pipeline_seconds": 0.8,
+        "speedup_factor": 31502.0,
+        "note": "Manual estimate: ~5 min/file for opening, identifying, extracting, and recording metadata fields"
+      },
+      "4_extraction_accuracy": {
+        "files_processed": 84,
+        "files_matched": 42,
+        "files_skipped": 42,
+        "misclassifications": 0,
+        "accuracy_pct": 100.0,
+        "note": "No misclassification observed: every matched file produced valid output"
+      },
+      "5_metadata_completeness": {
+        "json_files_produced": 42,
+        "files_with_all_5_top_fields": 0,
+        "files_missing_top_fields": 42,
+        "total_fields_checked": 210,
+        "null_or_nan_values": 15744,
+        "completeness_pct": -7397.14,
+        "total_samples_extracted": 5248,
+        "missing_fields_detail": [
+          {
+            "file": "20250521_ORID0036-12_Neuromed_EPIC_PT13.json",
+            "missing": [
+              "file_description"
+            ]
+          },
+          {
+            "file": "20250414_ORID0036-11_Neuromed_EPIC_PT09.json",
+            "missing": [
+              "file_description"
+            ]
+          },
+          {
+            "file": "20250609_ORID0036-14_Neuromed_EPIC_PT16.json",
+            "missing": [
+              "file_description"
+            ]
+          },
+          {
+            "file": "20250604_ORID0036-14_Neuromed_EPIC_PT15.json",
+            "missing": [
+              "file_description"
+            ]
+          },
+          {
+            "file": "20250407_ORID0036_Neuromed_EPIC_PT01-04.json",
+            "missing": [
+              "file_description"
+            ]
+          },
+          {
+            "file": "20250331_ORID0036-09_Neuromed_EPIC_PT07.json",
+            "missing": [
+              "file_description"
+            ]
+          },
+          {
+            "file": "20250723_ORID0036-17_Neuromed_EPIC_PT29.json",
+            "missing": [
+              "file_description"
+            ]
+          },
+          {
+            "file": "20250219_ORID0036-05_Neuromed_EPIC_PT03.json",
+            "missing": [
+              "file_description"
+            ]
+          },
+          {
+            "file": "20250416_ORID0036-11_Neuromed_EPIC_PT10.json",
+            "missing": [
+              "file_description"
+            ]
+          },
+          {
+            "file": "20251013_ORID0036-19_Neuromed_EPIC_PT36.json",
+            "missing": [
+              "file_description"
+            ]
+          }
+        ],
+        "null_fields_detail": []
+      },
+      "6_failure_rate": {
+        "input_file_types": {
+          ".csv": 84
+        },
+        "total_input_files": 84,
+        "files_causing_errors": 0,
+        "failure_rate_pct": 0.0,
+        "note": "No file caused a pipeline crash. Unrecognised files were skipped gracefully."
+      }
+    }
+  }
+]

@@ -1,0 +1,67 @@
+[
+  {
+    "dataset": "ORID0087",
+    "input_directory": "./Input/ORID0087",
+    "output_directory": "./Output/Benchmark_ORID0087",
+    "timestamp": "2026-06-27T22:57:55.716490",
+    "pipeline_return_code": 0,
+    "metrics": {
+      "1_processing_time": {
+        "elapsed_seconds": 4.802,
+        "elapsed_formatted": "0m 4.8s"
+      },
+      "2_throughput": {
+        "total_input_files": 825,
+        "files_matched": 388,
+        "files_skipped": 437,
+        "files_per_second": 171.82
+      },
+      "3_manual_effort_comparison": {
+        "estimated_manual_minutes_per_file": 5,
+        "estimated_manual_total_minutes": 4125,
+        "estimated_manual_total_hours": 68.8,
+        "pipeline_seconds": 4.8,
+        "speedup_factor": 51545.0,
+        "note": "Manual estimate: ~5 min/file for opening, identifying, extracting, and recording metadata fields"
+      },
+      "4_extraction_accuracy": {
+        "files_processed": 825,
+        "files_matched": 388,
+        "files_skipped": 437,
+        "misclassifications": 0,
+        "accuracy_pct": 100.0,
+        "note": "No misclassification observed: every matched file produced valid output"
+      },
+      "5_metadata_completeness": {
+        "json_files_produced": 388,
+        "files_with_all_5_top_fields": 388,
+        "files_missing_top_fields": 0,
+        "total_fields_checked": 1940,
+        "null_or_nan_values": 0,
+        "completeness_pct": 100.0,
+        "total_samples_extracted": 387,
+        "missing_fields_detail": [],
+        "null_fields_detail": []
+      },
+      "6_failure_rate": {
+        "input_file_types": {
+          ".xlsx": 1,
+          ".json": 3,
+          ".csv": 3,
+          ".html": 386,
+          ".gz": 5,
+          ".txt": 36,
+          ".log": 2,
+          ".parquet": 2,
+          ".zip": 384,
+          ".pdf": 1,
+          ".jpeg": 2
+        },
+        "total_input_files": 825,
+        "files_causing_errors": 0,
+        "failure_rate_pct": 0.0,
+        "note": "No file caused a pipeline crash. Unrecognised files were skipped gracefully."
+      }
+    }
+  }
+]

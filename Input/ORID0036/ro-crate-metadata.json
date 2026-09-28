@@ -1,0 +1,1282 @@
+{
+    "@context": "https://w3id.org/ro/crate/1.1/context",
+    "@graph": [
+        {
+            "@id": "./",
+            "@type": "Dataset",
+            "datePublished": "2026-09-28",
+            "description": "<p>This dataset contains <b>85</b> files generated through:</p><ul><li><b>Sequencing phase</b>: runs performed using Illumina iScan</li></ul><p>It also includes <b>RO-Crate metadata</b> file (ro-crate-metadata.json) that describes the context of data generation, such as the laboratory environment, the research institute, and the instruments used.</p>",
+            "hasPart": [
+                {
+                    "@id": "ORID0036/"
+                }
+            ],
+            "humanReadableSize": "475.86 KB",
+            "keywords": [
+                "Area Science Park",
+                "LAGE",
+                "LADE",
+                "RIT",
+                "Genomics",
+                "Metadata",
+                "Sequencing"
+            ],
+            "license": "https://opensource.org/licenses/MIT",
+            "name": "LAGE Experimental Dataset for the Repository: ORID0036"
+        },
+        {
+            "@id": "ro-crate-metadata.json",
+            "@type": "CreativeWork",
+            "about": {
+                "@id": "./"
+            },
+            "conformsTo": {
+                "@id": "https://w3id.org/ro/crate/1.2"
+            }
+        },
+        {
+            "@id": "#area-science-park",
+            "@type": "Organization",
+            "name": "Area Science Park",
+            "url": "https://www.areasciencepark.it/en/"
+        },
+        {
+            "@id": "#rit",
+            "@type": "Organization",
+            "name": "Research and Technology Institute (RIT)",
+            "parentOrganization": {
+                "@id": "#area-science-park"
+            }
+        },
+        {
+            "@id": "#lade",
+            "@type": "Organization",
+            "name": "Laboratory of Data Engineering (LADE)",
+            "parentOrganization": {
+                "@id": "#rit"
+            },
+            "url": "https://www.areasciencepark.it/infrastrutture-di-ricerca/data-engineering-lade/"
+        },
+        {
+            "@id": "#lage",
+            "@type": "Organization",
+            "name": "Laboratory of Genomics and Epigenomics (LAGE)",
+            "parentOrganization": {
+                "@id": "#rit"
+            },
+            "url": "https://www.areasciencepark.it/en/research-infrastructures/life-sciences/lage-genomics-and-epigenomics-laboratory/"
+        },
+        {
+            "@id": "#Crate_Generator",
+            "@type": "SoftwareApplication",
+            "creator": {
+                "@id": "#lade"
+            },
+            "description": "Script to generate RO-Crate descriptors for lab raw data folders.",
+            "license": "https://opensource.org/licenses/MIT",
+            "name": "LAGE Folder Descriptor Generator",
+            "url": "https://github.com/RitAreaSciencePark/LAGE_Metadata_Extraction/blob/main/Src/Crate_Generator.py"
+        },
+        {
+            "@id": "#History_Extractor",
+            "@type": "SoftwareApplication",
+            "creator": {
+                "@id": "#lade"
+            },
+            "description": "Logic used to reconstruct sample-centric provenance from fragmented metadata.",
+            "name": "LAGE Sample History Extractor"
+        },
+        {
+            "@id": "#fastqc-software",
+            "@type": "SoftwareApplication",
+            "name": "FastQC from Babraham Bioinformatics",
+            "url": "https://www.bioinformatics.babraham.ac.uk/projects/fastqc/",
+            "version": "0.12.1"
+        },
+        {
+            "@id": "#promethion-device",
+            "@type": "Device",
+            "manufacturer": "Oxford Nanopore Technologies",
+            "model": "PromethION 24/48",
+            "name": "Oxford Nanopore PromethION",
+            "url": "https://nanoporetech.com/products/promethion"
+        },
+        {
+            "@id": "#nanopore-sequencing-activity",
+            "@type": "CreateAction",
+            "instrument": {
+                "@id": "#promethion-device"
+            },
+            "name": "Nanopore Sequencing Run"
+        },
+        {
+            "@id": "#iscan-device",
+            "@type": "Device",
+            "manufacturer": "Illumina",
+            "model": "iScan 24/48",
+            "name": "Illumina iScan",
+            "url": "https://www.illumina.com/systems/array-scanners/iscan.html"
+        },
+        {
+            "@id": "#iscan-scanning-activity",
+            "@type": "CreateAction",
+            "instrument": {
+                "@id": "#iscan-device"
+            },
+            "name": "Illumina iScan Scanning Run",
+            "result": [
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250326_ORID0036-09_Neuromed_EPIC_PT06.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250709_ORID0036-16_Neuromed_EPIC_PT25.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250623_ORID0036-15_Neuromed_EPIC_PT20.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250618_ORID0036-15_Neuromed_EPIC_PT19.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250716_ORID0036-17_Neuromed_EPIC_PT27.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250402_ORID0036-09_Neuromed_EPIC_PT08.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250625_ORID0036-15_Neuromed_EPIC_PT21.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20251216_ORID0036-21_Neuromed_EPIC_PT39.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250702_ORID0036-16_Neuromed_EPIC_PT23.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250227_ORID0036-05_Neuromed_EPIC_PT01.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250407_ORID0036_Neuromed_EPIC_PT01-04.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250616_ORID0036-14_Neuromed_EPIC_PT18.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250611_ORID0036-14_Neuromed_EPIC_PT17.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250416_ORID0036-11_Neuromed_EPIC_PT10.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250604_ORID0036-14_Neuromed_EPIC_PT15.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250917_ORID0036-18_Neuromed_EPIC_PT34.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250408_ORID0036_Neuromed_EPIC_PT05-08.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250219_ORID0036-05_Neuromed_EPIC_PT03.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250609_ORID0036-14_Neuromed_EPIC_PT16.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20251008_ORID0036-19_Neuromed_EPIC_PT35.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250414_ORID0036-11_Neuromed_EPIC_PT09.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250519_ORID0036-12_Neuromed_EPIC_PT12.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20251013_ORID0036-19_Neuromed_EPIC_PT36.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250521_ORID0036-12_Neuromed_EPIC_PT13.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250224_ORID0036-05_Neuromed_EPIC_PT02.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250511_ORID0036-12_Neuromed_EPIC_PT11.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250910_ORID0036-18_Neuromed_EPIC_PT32.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250908_ORID0036-18_Neuromed_EPIC_PT31.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250217_ORID0036-05_Neuromed_EPIC_PT04.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250728_ORID0036-17_Neuromed_EPIC_PT30.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20251015_ORID0036-19_Neuromed_EPIC_PT37.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250721_ORID0036-17_Neuromed_EPIC_PT28.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250324_ORID0036-09_Neuromed_EPIC_PT05.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250331_ORID0036-09_Neuromed_EPIC_PT07.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250922_ORID0036-18_Neuromed_EPIC_PT33.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250714_ORID0036-16_Neuromed_EPIC_PT26.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250707_ORID0036-16_Neuromed_EPIC_PT24.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250408_ORID0036_Neuromed_EPIC_PT01-08.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250630_ORID0036-15_Neuromed_EPIC_PT22.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20251020_ORID0036-19_Neuromed_EPIC_PT38.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250723_ORID0036-17_Neuromed_EPIC_PT29.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250428_ORID0036-11_Neuromed_EPIC_PT1-32_PT2-32.csv"
+                }
+            ]
+        },
+        {
+            "@id": "#novaseq-device",
+            "@type": "Device",
+            "manufacturer": "Illumina",
+            "model": "NovaSeq 6000",
+            "name": "Illumina NovaSeq 6000",
+            "url": "https://www.illumina.com/systems/sequencing-platforms/novaseq.html"
+        },
+        {
+            "@id": "#novaseq-sequencing-activity",
+            "@type": "CreateAction",
+            "instrument": {
+                "@id": "#novaseq-device"
+            },
+            "name": "Illumina NovaSeq Sequencing Run"
+        },
+        {
+            "@id": "#tapestation-device",
+            "@type": "Device",
+            "manufacturer": "Agilent Technologies",
+            "model": "TapeStation 4200",
+            "name": "Agilent TapeStation 4200",
+            "url": "https://www.agilent.com/en/products/tapestation"
+        },
+        {
+            "@id": "#tapestation-quality-control-activity",
+            "@type": "CreateAction",
+            "description": "Quality control process for samples before sequencing, including electrophoretic analysis using the Agilent TapeStation 4200 to assess DNA/RNA integrity and size distribution.",
+            "instrument": {
+                "@id": "#tapestation-device"
+            },
+            "name": "TapeStation Quality Control"
+        },
+        {
+            "@id": "#quality-control-activity",
+            "@type": "CreateAction",
+            "description": "Quality control process for samples before sequencing, which may include NanoDrop UV absorbance measurements, report of technical observations and anomalies detected (both before and after sequencing), and other QC steps.",
+            "name": "Sample Quality Control"
+        },
+        {
+            "@id": "#post-sequencing-quality-control-activity",
+            "@type": "CreateAction",
+            "description": "Quality control process after sequencing, which includes FastQC analysis of raw FASTQ files.",
+            "instrument": {
+                "@id": "#fastqc-software"
+            },
+            "name": "Post-Sequencing Quality Control"
+        },
+        {
+            "@id": "#acceptance-activity",
+            "@type": "CreateAction",
+            "description": "Initial phase where the researcher or client provides the samples and plate scheme description before sequencing.",
+            "name": "Sample Acceptance Phase"
+        },
+        {
+            "@id": "#pod5-format",
+            "@type": "MediaType",
+            "description": "Nanopore raw signal data format replacing FAST5.",
+            "name": "POD5",
+            "url": "https://software-docs.nanoporetech.com/pod5/latest/"
+        },
+        {
+            "@id": "#fastq-gz-format",
+            "@type": "MediaType",
+            "description": "Gzipped FASTQ format for storing biological sequences and quality scores, generated during the post-sequencing basecalling step.",
+            "name": "FASTQ GZipped",
+            "url": "https://knowledge.illumina.com/software/general/software-general-reference_material-list/000002211.html"
+        },
+        {
+            "@id": "#bam-format",
+            "@type": "MediaType",
+            "description": "Binary representation of the Sequence Alignment/Map (SAM) format.",
+            "name": "BAM (Binary Alignment Map)",
+            "url": "https://support.illumina.com/help/BS_App_RNASeq_Alignment_OLH_1000000006112/Content/Source/Informatics/BAM-Format.htm"
+        },
+        {
+            "@id": "#bai-format",
+            "@type": "MediaType",
+            "description": "Index file for rapid access to BAM alignment files.",
+            "name": "BAI (BAM Index)",
+            "url": "https://en.wikipedia.org/wiki/BAI_(file_format)"
+        },
+        {
+            "@id": "#xad-format",
+            "@type": "MediaType",
+            "description": "Custom archive format used for storing complex datasets with embedded metadata.",
+            "name": "XAD Archive"
+        },
+        {
+            "@id": "#vcf-format",
+            "@type": "MediaType",
+            "description": "Text-based format for storing gene sequence variations such as SNVs, indels and structural variants.",
+            "name": "VCF (Variant Call Format)",
+            "url": "https://samtools.github.io/hts-specs/VCFv4.5.pdf"
+        },
+        {
+            "@id": "#cram-format",
+            "@type": "MediaType",
+            "description": "Compressed, columnar file format for storing aligned sequencing reads, more space-efficient than BAM.",
+            "name": "CRAM",
+            "url": "https://samtools.github.io/hts-specs/CRAMv3.pdf"
+        },
+        {
+            "@id": "#cram-index-format",
+            "@type": "MediaType",
+            "description": "Index file for rapid access to CRAM alignment files.",
+            "name": "CRAI (CRAM Index)",
+            "url": "https://samtools.github.io/hts-specs/CRAMv3.pdf"
+        },
+        {
+            "@id": "ORID0036/",
+            "@type": "Dataset",
+            "description": "<p>Main data directory containing outputs from the following phases:</p><ul><li><b>Sequencing phase</b>: runs performed using Illumina iScan</li></ul><p>This dataset includes:</p><ul><li>1 <b>.json</b> files</li><li>84 <b>.csv</b> files</li></ul>",
+            "hasPart": [
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/"
+                }
+            ],
+            "name": "ORID0036"
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/",
+            "@type": "Dataset",
+            "description": "Directory containing <b>20250219_ORID0036_NEUROMED_EPIC</b> data.",
+            "hasPart": [
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250326_ORID0036-09_Neuromed_EPIC_PT06.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250709_ORID0036-16_Neuromed_EPIC_PT25.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250623_ORID0036-15_Neuromed_EPIC_PT20.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250618_ORID0036-15_Neuromed_EPIC_PT19.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250716_ORID0036-17_Neuromed_EPIC_PT27.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250402_ORID0036-09_Neuromed_EPIC_PT08.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250625_ORID0036-15_Neuromed_EPIC_PT21.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20251216_ORID0036-21_Neuromed_EPIC_PT39.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250702_ORID0036-16_Neuromed_EPIC_PT23.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250227_ORID0036-05_Neuromed_EPIC_PT01.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250407_ORID0036_Neuromed_EPIC_PT01-04.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250616_ORID0036-14_Neuromed_EPIC_PT18.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250611_ORID0036-14_Neuromed_EPIC_PT17.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250416_ORID0036-11_Neuromed_EPIC_PT10.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250604_ORID0036-14_Neuromed_EPIC_PT15.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250917_ORID0036-18_Neuromed_EPIC_PT34.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250408_ORID0036_Neuromed_EPIC_PT05-08.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250219_ORID0036-05_Neuromed_EPIC_PT03.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250609_ORID0036-14_Neuromed_EPIC_PT16.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20251008_ORID0036-19_Neuromed_EPIC_PT35.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250414_ORID0036-11_Neuromed_EPIC_PT09.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250519_ORID0036-12_Neuromed_EPIC_PT12.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20251013_ORID0036-19_Neuromed_EPIC_PT36.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250521_ORID0036-12_Neuromed_EPIC_PT13.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250224_ORID0036-05_Neuromed_EPIC_PT02.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250511_ORID0036-12_Neuromed_EPIC_PT11.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250910_ORID0036-18_Neuromed_EPIC_PT32.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250908_ORID0036-18_Neuromed_EPIC_PT31.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250217_ORID0036-05_Neuromed_EPIC_PT04.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250728_ORID0036-17_Neuromed_EPIC_PT30.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20251015_ORID0036-19_Neuromed_EPIC_PT37.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250721_ORID0036-17_Neuromed_EPIC_PT28.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250324_ORID0036-09_Neuromed_EPIC_PT05.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250331_ORID0036-09_Neuromed_EPIC_PT07.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250922_ORID0036-18_Neuromed_EPIC_PT33.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250714_ORID0036-16_Neuromed_EPIC_PT26.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250707_ORID0036-16_Neuromed_EPIC_PT24.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250408_ORID0036_Neuromed_EPIC_PT01-08.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250630_ORID0036-15_Neuromed_EPIC_PT22.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20251020_ORID0036-19_Neuromed_EPIC_PT38.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250723_ORID0036-17_Neuromed_EPIC_PT29.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/20250428_ORID0036-11_Neuromed_EPIC_PT1-32_PT2-32.csv"
+                },
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/CSVs/"
+                }
+            ],
+            "humanReadableSize": "237.93 KB",
+            "name": "20250219_ORID0036_NEUROMED_EPIC"
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250326_ORID0036-09_Neuromed_EPIC_PT06.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.33 KB",
+            "name": "20250326_ORID0036-09_Neuromed_EPIC_PT06.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250709_ORID0036-16_Neuromed_EPIC_PT25.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250709_ORID0036-16_Neuromed_EPIC_PT25.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250623_ORID0036-15_Neuromed_EPIC_PT20.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250623_ORID0036-15_Neuromed_EPIC_PT20.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250618_ORID0036-15_Neuromed_EPIC_PT19.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250618_ORID0036-15_Neuromed_EPIC_PT19.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250716_ORID0036-17_Neuromed_EPIC_PT27.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250716_ORID0036-17_Neuromed_EPIC_PT27.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250402_ORID0036-09_Neuromed_EPIC_PT08.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.33 KB",
+            "name": "20250402_ORID0036-09_Neuromed_EPIC_PT08.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250625_ORID0036-15_Neuromed_EPIC_PT21.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250625_ORID0036-15_Neuromed_EPIC_PT21.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20251216_ORID0036-21_Neuromed_EPIC_PT39.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.45 KB",
+            "name": "20251216_ORID0036-21_Neuromed_EPIC_PT39.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250702_ORID0036-16_Neuromed_EPIC_PT23.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250702_ORID0036-16_Neuromed_EPIC_PT23.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250227_ORID0036-05_Neuromed_EPIC_PT01.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250227_ORID0036-05_Neuromed_EPIC_PT01.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250407_ORID0036_Neuromed_EPIC_PT01-04.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "16.80 KB",
+            "name": "20250407_ORID0036_Neuromed_EPIC_PT01-04.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250616_ORID0036-14_Neuromed_EPIC_PT18.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250616_ORID0036-14_Neuromed_EPIC_PT18.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250611_ORID0036-14_Neuromed_EPIC_PT17.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250611_ORID0036-14_Neuromed_EPIC_PT17.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250416_ORID0036-11_Neuromed_EPIC_PT10.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250416_ORID0036-11_Neuromed_EPIC_PT10.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250604_ORID0036-14_Neuromed_EPIC_PT15.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250604_ORID0036-14_Neuromed_EPIC_PT15.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250917_ORID0036-18_Neuromed_EPIC_PT34.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250917_ORID0036-18_Neuromed_EPIC_PT34.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250408_ORID0036_Neuromed_EPIC_PT05-08.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "16.80 KB",
+            "name": "20250408_ORID0036_Neuromed_EPIC_PT05-08.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250219_ORID0036-05_Neuromed_EPIC_PT03.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250219_ORID0036-05_Neuromed_EPIC_PT03.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250609_ORID0036-14_Neuromed_EPIC_PT16.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250609_ORID0036-14_Neuromed_EPIC_PT16.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20251008_ORID0036-19_Neuromed_EPIC_PT35.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20251008_ORID0036-19_Neuromed_EPIC_PT35.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250414_ORID0036-11_Neuromed_EPIC_PT09.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250414_ORID0036-11_Neuromed_EPIC_PT09.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250519_ORID0036-12_Neuromed_EPIC_PT12.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250519_ORID0036-12_Neuromed_EPIC_PT12.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20251013_ORID0036-19_Neuromed_EPIC_PT36.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20251013_ORID0036-19_Neuromed_EPIC_PT36.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250521_ORID0036-12_Neuromed_EPIC_PT13.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250521_ORID0036-12_Neuromed_EPIC_PT13.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250224_ORID0036-05_Neuromed_EPIC_PT02.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250224_ORID0036-05_Neuromed_EPIC_PT02.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250511_ORID0036-12_Neuromed_EPIC_PT11.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250511_ORID0036-12_Neuromed_EPIC_PT11.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250910_ORID0036-18_Neuromed_EPIC_PT32.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250910_ORID0036-18_Neuromed_EPIC_PT32.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250908_ORID0036-18_Neuromed_EPIC_PT31.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250908_ORID0036-18_Neuromed_EPIC_PT31.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250217_ORID0036-05_Neuromed_EPIC_PT04.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250217_ORID0036-05_Neuromed_EPIC_PT04.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250728_ORID0036-17_Neuromed_EPIC_PT30.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250728_ORID0036-17_Neuromed_EPIC_PT30.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20251015_ORID0036-19_Neuromed_EPIC_PT37.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20251015_ORID0036-19_Neuromed_EPIC_PT37.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250721_ORID0036-17_Neuromed_EPIC_PT28.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250721_ORID0036-17_Neuromed_EPIC_PT28.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250324_ORID0036-09_Neuromed_EPIC_PT05.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.33 KB",
+            "name": "20250324_ORID0036-09_Neuromed_EPIC_PT05.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250331_ORID0036-09_Neuromed_EPIC_PT07.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.33 KB",
+            "name": "20250331_ORID0036-09_Neuromed_EPIC_PT07.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250922_ORID0036-18_Neuromed_EPIC_PT33.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250922_ORID0036-18_Neuromed_EPIC_PT33.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250714_ORID0036-16_Neuromed_EPIC_PT26.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250714_ORID0036-16_Neuromed_EPIC_PT26.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250707_ORID0036-16_Neuromed_EPIC_PT24.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250707_ORID0036-16_Neuromed_EPIC_PT24.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250408_ORID0036_Neuromed_EPIC_PT01-08.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "33.29 KB",
+            "name": "20250408_ORID0036_Neuromed_EPIC_PT01-08.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250630_ORID0036-15_Neuromed_EPIC_PT22.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250630_ORID0036-15_Neuromed_EPIC_PT22.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20251020_ORID0036-19_Neuromed_EPIC_PT38.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20251020_ORID0036-19_Neuromed_EPIC_PT38.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250723_ORID0036-17_Neuromed_EPIC_PT29.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.43 KB",
+            "name": "20250723_ORID0036-17_Neuromed_EPIC_PT29.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/20250428_ORID0036-11_Neuromed_EPIC_PT1-32_PT2-32.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#iscan-scanning-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Illumina iScan microarray sample sheet.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "3.06 KB",
+            "name": "20250428_ORID0036-11_Neuromed_EPIC_PT1-32_PT2-32.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250219_ORID0036_NEUROMED_EPIC/CSVs/",
+            "@type": "Dataset",
+            "description": "Directory containing <b>CSVs</b> data.",
+            "hasPart": [
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250326_ORID0036-09_Neuromed_EPIC_PT06.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250709_ORID0036-16_Neuromed_EPIC_PT25.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250623_ORID0036-15_Neuromed_EPIC_PT20.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250618_ORID0036-15_Neuromed_EPIC_PT19.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250716_ORID0036-17_Neuromed_EPIC_PT27.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250402_ORID0036-09_Neuromed_EPIC_PT08.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250625_ORID0036-15_Neuromed_EPIC_PT21.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20251216_ORID0036-21_Neuromed_EPIC_PT39.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250702_ORID0036-16_Neuromed_EPIC_PT23.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250227_ORID0036-05_Neuromed_EPIC_PT01.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250407_ORID0036_Neuromed_EPIC_PT01-04.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250616_ORID0036-14_Neuromed_EPIC_PT18.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250611_ORID0036-14_Neuromed_EPIC_PT17.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250416_ORID0036-11_Neuromed_EPIC_PT10.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250604_ORID0036-14_Neuromed_EPIC_PT15.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250917_ORID0036-18_Neuromed_EPIC_PT34.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250408_ORID0036_Neuromed_EPIC_PT05-08.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250219_ORID0036-05_Neuromed_EPIC_PT03.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250609_ORID0036-14_Neuromed_EPIC_PT16.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20251008_ORID0036-19_Neuromed_EPIC_PT35.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250414_ORID0036-11_Neuromed_EPIC_PT09.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250519_ORID0036-12_Neuromed_EPIC_PT12.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20251013_ORID0036-19_Neuromed_EPIC_PT36.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250521_ORID0036-12_Neuromed_EPIC_PT13.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250224_ORID0036-05_Neuromed_EPIC_PT02.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250511_ORID0036-12_Neuromed_EPIC_PT11.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250910_ORID0036-18_Neuromed_EPIC_PT32.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250908_ORID0036-18_Neuromed_EPIC_PT31.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250217_ORID0036-05_Neuromed_EPIC_PT04.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250728_ORID0036-17_Neuromed_EPIC_PT30.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20251015_ORID0036-19_Neuromed_EPIC_PT37.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250721_ORID0036-17_Neuromed_EPIC_PT28.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250324_ORID0036-09_Neuromed_EPIC_PT05.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250331_ORID0036-09_Neuromed_EPIC_PT07.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250922_ORID0036-18_Neuromed_EPIC_PT33.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250714_ORID0036-16_Neuromed_EPIC_PT26.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250707_ORID0036-16_Neuromed_EPIC_PT24.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250408_ORID0036_Neuromed_EPIC_PT01-08.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250630_ORID0036-15_Neuromed_EPIC_PT22.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20251020_ORID0036-19_Neuromed_EPIC_PT38.csv",
+                "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250723_ORID0036-17_Neuromed_EPIC_PT29.csv",
+                {
+                    "@id": "20250219_ORID0036_NEUROMED_EPIC/CSVs/20250428_ORID0036-11_Neuromed_EPIC_PT1-32_PT2-32.csv"
+                }
+            ],
+            "humanReadableSize": "237.93 KB",
+            "name": "CSVs"
+        }
+    ]
+}

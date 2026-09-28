@@ -1,0 +1,1179 @@
+{
+    "@context": "https://w3id.org/ro/crate/1.1/context",
+    "@graph": [
+        {
+            "@id": "./",
+            "@type": "Dataset",
+            "datePublished": "2026-09-28",
+            "description": "<p>This dataset contains <b>35</b> files generated through:</p><ul><li><b>Sequencing phase</b>: runs performed using Oxford Nanopore PromethION</li></ul><p>It also includes <b>RO-Crate metadata</b> file (ro-crate-metadata.json) that describes the context of data generation, such as the laboratory environment, the research institute, and the instruments used.</p>",
+            "hasPart": [
+                {
+                    "@id": "ORID0085/"
+                }
+            ],
+            "humanReadableSize": "4.12 MB",
+            "keywords": [
+                "Area Science Park",
+                "LAGE",
+                "LADE",
+                "RIT",
+                "Genomics",
+                "Metadata",
+                "Sequencing"
+            ],
+            "license": "https://opensource.org/licenses/MIT",
+            "name": "LAGE Experimental Dataset for the Repository: ORID0085"
+        },
+        {
+            "@id": "ro-crate-metadata.json",
+            "@type": "CreativeWork",
+            "about": {
+                "@id": "./"
+            },
+            "conformsTo": {
+                "@id": "https://w3id.org/ro/crate/1.2"
+            }
+        },
+        {
+            "@id": "#area-science-park",
+            "@type": "Organization",
+            "name": "Area Science Park",
+            "url": "https://www.areasciencepark.it/en/"
+        },
+        {
+            "@id": "#rit",
+            "@type": "Organization",
+            "name": "Research and Technology Institute (RIT)",
+            "parentOrganization": {
+                "@id": "#area-science-park"
+            }
+        },
+        {
+            "@id": "#lade",
+            "@type": "Organization",
+            "name": "Laboratory of Data Engineering (LADE)",
+            "parentOrganization": {
+                "@id": "#rit"
+            },
+            "url": "https://www.areasciencepark.it/infrastrutture-di-ricerca/data-engineering-lade/"
+        },
+        {
+            "@id": "#lage",
+            "@type": "Organization",
+            "name": "Laboratory of Genomics and Epigenomics (LAGE)",
+            "parentOrganization": {
+                "@id": "#rit"
+            },
+            "url": "https://www.areasciencepark.it/en/research-infrastructures/life-sciences/lage-genomics-and-epigenomics-laboratory/"
+        },
+        {
+            "@id": "#Crate_Generator",
+            "@type": "SoftwareApplication",
+            "creator": {
+                "@id": "#lade"
+            },
+            "description": "Script to generate RO-Crate descriptors for lab raw data folders.",
+            "license": "https://opensource.org/licenses/MIT",
+            "name": "LAGE Folder Descriptor Generator",
+            "url": "https://github.com/RitAreaSciencePark/LAGE_Metadata_Extraction/blob/main/Src/Crate_Generator.py"
+        },
+        {
+            "@id": "#History_Extractor",
+            "@type": "SoftwareApplication",
+            "creator": {
+                "@id": "#lade"
+            },
+            "description": "Logic used to reconstruct sample-centric provenance from fragmented metadata.",
+            "name": "LAGE Sample History Extractor"
+        },
+        {
+            "@id": "#fastqc-software",
+            "@type": "SoftwareApplication",
+            "name": "FastQC from Babraham Bioinformatics",
+            "url": "https://www.bioinformatics.babraham.ac.uk/projects/fastqc/",
+            "version": "0.12.1"
+        },
+        {
+            "@id": "#promethion-device",
+            "@type": "Device",
+            "manufacturer": "Oxford Nanopore Technologies",
+            "model": "PromethION 24/48",
+            "name": "Oxford Nanopore PromethION",
+            "url": "https://nanoporetech.com/products/promethion"
+        },
+        {
+            "@id": "#nanopore-sequencing-activity",
+            "@type": "CreateAction",
+            "instrument": {
+                "@id": "#promethion-device"
+            },
+            "name": "Nanopore Sequencing Run",
+            "result": [
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/throughput_PBE45781_84291f8c_26f25936.csv"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/pore_activity_PBE45781_84291f8c_26f25936.csv"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/sample_sheet_PBE45781_20250929_1357_84291f8c.csv"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/report_PBE45781_20250929_1357_84291f8c.md"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/report_PBE45781_20250929_1357_84291f8c.json"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/sequencing_summary_PBE45781_84291f8c_26f25936.txt"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/final_summary_PBE45781_84291f8c_26f25936.txt"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/other_reports/pore_scan_data_PBE45781_84291f8c_26f25936.csv"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/other_reports/temperature_adjust_data_PBE45781_84291f8c_26f25936.csv"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/pod5/PBE45781_84291f8c_26f25936_78.pod5"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/pod5/PBE45781_84291f8c_26f25936_79.pod5"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/pod5/pass/fastq_runid_26f25936952b009c7c9e44bf5f825d313f73d96f_9_18.fastq.gz"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/fastq_pass/PBE45781_pass_84291f8c_26f25936_75.fastq.gz"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/fastq_pass/PBE45781_pass_84291f8c_26f25936_76.fastq.gz"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/fastq_fail/PBE45781_fail_84291f8c_26f25936_94.fastq.gz"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/fastq_fail/PBE45781_fail_84291f8c_26f25936_95.fastq.gz"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/fastq_fail/PBE45781_fail_84291f8c_26f25936_96.fastq.gz"
+                },
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/final_summary_PBG11294_16ee63fc_0af2d590.txt"
+                },
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/sequencing_summary_PBG11294_16ee63fc_0af2d590.txt"
+                },
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/other_reports/temperature_adjust_data_PBG11294_16ee63fc_0af2d590.csv"
+                },
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/other_reports/pore_scan_data_PBG11294_16ee63fc_0af2d590.csv"
+                },
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/pod5/PBG11294_16ee63fc_0af2d590_2.pod5"
+                },
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/pod5/PBG11294_16ee63fc_0af2d590_1.pod5"
+                },
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/pod5/PBG11294_16ee63fc_0af2d590_0.pod5"
+                },
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/fastq_pass/PBG11294_pass_16ee63fc_0af2d590_2.fastq.gz"
+                },
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/fastq_pass/PBG11294_pass_16ee63fc_0af2d590_1.fastq.gz"
+                },
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/fastq_pass/PBG11294_pass_16ee63fc_0af2d590_0.fastq.gz"
+                }
+            ]
+        },
+        {
+            "@id": "#iscan-device",
+            "@type": "Device",
+            "manufacturer": "Illumina",
+            "model": "iScan 24/48",
+            "name": "Illumina iScan",
+            "url": "https://www.illumina.com/systems/array-scanners/iscan.html"
+        },
+        {
+            "@id": "#iscan-scanning-activity",
+            "@type": "CreateAction",
+            "instrument": {
+                "@id": "#iscan-device"
+            },
+            "name": "Illumina iScan Scanning Run"
+        },
+        {
+            "@id": "#novaseq-device",
+            "@type": "Device",
+            "manufacturer": "Illumina",
+            "model": "NovaSeq 6000",
+            "name": "Illumina NovaSeq 6000",
+            "url": "https://www.illumina.com/systems/sequencing-platforms/novaseq.html"
+        },
+        {
+            "@id": "#novaseq-sequencing-activity",
+            "@type": "CreateAction",
+            "instrument": {
+                "@id": "#novaseq-device"
+            },
+            "name": "Illumina NovaSeq Sequencing Run"
+        },
+        {
+            "@id": "#tapestation-device",
+            "@type": "Device",
+            "manufacturer": "Agilent Technologies",
+            "model": "TapeStation 4200",
+            "name": "Agilent TapeStation 4200",
+            "url": "https://www.agilent.com/en/products/tapestation"
+        },
+        {
+            "@id": "#tapestation-quality-control-activity",
+            "@type": "CreateAction",
+            "description": "Quality control process for samples before sequencing, including electrophoretic analysis using the Agilent TapeStation 4200 to assess DNA/RNA integrity and size distribution.",
+            "instrument": {
+                "@id": "#tapestation-device"
+            },
+            "name": "TapeStation Quality Control"
+        },
+        {
+            "@id": "#quality-control-activity",
+            "@type": "CreateAction",
+            "description": "Quality control process for samples before sequencing, which may include NanoDrop UV absorbance measurements, report of technical observations and anomalies detected (both before and after sequencing), and other QC steps.",
+            "name": "Sample Quality Control",
+            "result": [
+                {
+                    "@id": "20250929_ORID0085C/2025-03-13_ext_lupo_05x.pdf"
+                }
+            ]
+        },
+        {
+            "@id": "#post-sequencing-quality-control-activity",
+            "@type": "CreateAction",
+            "description": "Quality control process after sequencing, which includes FastQC analysis of raw FASTQ files.",
+            "instrument": {
+                "@id": "#fastqc-software"
+            },
+            "name": "Post-Sequencing Quality Control"
+        },
+        {
+            "@id": "#acceptance-activity",
+            "@type": "CreateAction",
+            "description": "Initial phase where the researcher or client provides the samples and plate scheme description before sequencing.",
+            "name": "Sample Acceptance Phase"
+        },
+        {
+            "@id": "#pod5-format",
+            "@type": "MediaType",
+            "description": "Nanopore raw signal data format replacing FAST5.",
+            "name": "POD5",
+            "url": "https://software-docs.nanoporetech.com/pod5/latest/"
+        },
+        {
+            "@id": "#fastq-gz-format",
+            "@type": "MediaType",
+            "description": "Gzipped FASTQ format for storing biological sequences and quality scores, generated during the post-sequencing basecalling step.",
+            "name": "FASTQ GZipped",
+            "url": "https://knowledge.illumina.com/software/general/software-general-reference_material-list/000002211.html"
+        },
+        {
+            "@id": "#bam-format",
+            "@type": "MediaType",
+            "description": "Binary representation of the Sequence Alignment/Map (SAM) format.",
+            "name": "BAM (Binary Alignment Map)",
+            "url": "https://support.illumina.com/help/BS_App_RNASeq_Alignment_OLH_1000000006112/Content/Source/Informatics/BAM-Format.htm"
+        },
+        {
+            "@id": "#bai-format",
+            "@type": "MediaType",
+            "description": "Index file for rapid access to BAM alignment files.",
+            "name": "BAI (BAM Index)",
+            "url": "https://en.wikipedia.org/wiki/BAI_(file_format)"
+        },
+        {
+            "@id": "#xad-format",
+            "@type": "MediaType",
+            "description": "Custom archive format used for storing complex datasets with embedded metadata.",
+            "name": "XAD Archive"
+        },
+        {
+            "@id": "#vcf-format",
+            "@type": "MediaType",
+            "description": "Text-based format for storing gene sequence variations such as SNVs, indels and structural variants.",
+            "name": "VCF (Variant Call Format)",
+            "url": "https://samtools.github.io/hts-specs/VCFv4.5.pdf"
+        },
+        {
+            "@id": "#cram-format",
+            "@type": "MediaType",
+            "description": "Compressed, columnar file format for storing aligned sequencing reads, more space-efficient than BAM.",
+            "name": "CRAM",
+            "url": "https://samtools.github.io/hts-specs/CRAMv3.pdf"
+        },
+        {
+            "@id": "#cram-index-format",
+            "@type": "MediaType",
+            "description": "Index file for rapid access to CRAM alignment files.",
+            "name": "CRAI (CRAM Index)",
+            "url": "https://samtools.github.io/hts-specs/CRAMv3.pdf"
+        },
+        {
+            "@id": "ORID0085/",
+            "@type": "Dataset",
+            "description": "<p>Main data directory containing outputs from the following phases:</p><ul><li><b>Sequencing phase</b>: runs performed using Oxford Nanopore PromethION</li></ul><p>This dataset includes:</p><ul><li>2 <b>.json</b> files</li><li>9 <b>.csv</b> files</li><li>1 <b>.pdf</b> files</li><li>1 <b>.tsv</b> files</li><li>1 <b>.md</b> files</li><li>1 <b>.html</b> files</li><li>5 <b>.txt</b> files</li><li>5 <b>.pod5</b> files</li><li>9 <b>.fastq.gz</b> files</li><li>1 <b>.log</b> files</li></ul>",
+            "hasPart": [
+                {
+                    "@id": "20250929_ORID0085C/"
+                }
+            ],
+            "name": "ORID0085"
+        },
+        {
+            "@id": "20250929_ORID0085C/",
+            "@type": "Dataset",
+            "description": "Directory containing <b>20250929_ORID0085C</b> data.",
+            "hasPart": [
+                {
+                    "@id": "20250929_ORID0085C/2025-03-13_ext_lupo_05x_sampleTable.csv"
+                },
+                {
+                    "@id": "20250929_ORID0085C/2025-03-13_ext_lupo_05x_compactPeakTable.csv"
+                },
+                {
+                    "@id": "20250929_ORID0085C/2025-03-13_ext_lupo_05x.pdf"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/"
+                },
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/"
+                }
+            ],
+            "humanReadableSize": "623.35 KB",
+            "name": "20250929_ORID0085C"
+        },
+        {
+            "@id": "20250929_ORID0085C/2025-03-13_ext_lupo_05x_sampleTable.csv",
+            "@type": "File",
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Tabular data file containing quantitative results and analysis outputs.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "752.00 B",
+            "name": "2025-03-13_ext_lupo_05x_sampleTable.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/2025-03-13_ext_lupo_05x_compactPeakTable.csv",
+            "@type": "File",
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Tabular data file containing quantitative results and analysis outputs.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "3.73 KB",
+            "name": "2025-03-13_ext_lupo_05x_compactPeakTable.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/2025-03-13_ext_lupo_05x.pdf",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#quality-control-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Technical report or spectral curves obtained during the quality control phase.</i>",
+            "encodingFormat": "application/pdf",
+            "humanReadableSize": "618.89 KB",
+            "name": "2025-03-13_ext_lupo_05x.pdf",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/",
+            "@type": "Dataset",
+            "description": "Directory containing <b>Pich31-12-24</b> data.",
+            "hasPart": [
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/throughput_PBE45781_84291f8c_26f25936.csv"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/pore_activity_PBE45781_84291f8c_26f25936.csv"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/sample_sheet_PBE45781_20250929_1357_84291f8c.csv"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/barcode_alignment_PBE45781_84291f8c_26f25936.tsv"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/report_PBE45781_20250929_1357_84291f8c.md"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/report_PBE45781_20250929_1357_84291f8c.html"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/report_PBE45781_20250929_1357_84291f8c.json"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/sequencing_summary_PBE45781_84291f8c_26f25936.txt"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/final_summary_PBE45781_84291f8c_26f25936.txt"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/other_reports/"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/pod5/"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/fastq_pass/"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/fastq_fail/"
+                }
+            ],
+            "humanReadableSize": "3.38 MB",
+            "name": "Pich31-12-24"
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/throughput_PBE45781_84291f8c_26f25936.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Tabular data file containing quantitative results and analysis outputs.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "50.21 KB",
+            "name": "throughput_PBE45781_84291f8c_26f25936.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/pore_activity_PBE45781_84291f8c_26f25936.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Tabular data file containing quantitative results and analysis outputs.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "81.38 KB",
+            "name": "pore_activity_PBE45781_84291f8c_26f25936.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/sample_sheet_PBE45781_20250929_1357_84291f8c.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "Tabular data file containing sample identifiers and experimental metadata for downstream analysis.",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "185.00 B",
+            "name": "sample_sheet_PBE45781_20250929_1357_84291f8c.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/barcode_alignment_PBE45781_84291f8c_26f25936.tsv",
+            "@type": "File",
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Validated text/tab-separated-values data file.</i>",
+            "encodingFormat": "text/tab-separated-values",
+            "humanReadableSize": "260.00 B",
+            "name": "barcode_alignment_PBE45781_84291f8c_26f25936.tsv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/report_PBE45781_20250929_1357_84291f8c.md",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "Human-readable summary of the sequencing run and primary analysis results.",
+            "encodingFormat": "text/markdown",
+            "humanReadableSize": "1.94 MB",
+            "name": "report_PBE45781_20250929_1357_84291f8c.md",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/report_PBE45781_20250929_1357_84291f8c.html",
+            "@type": "File",
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Validated text/html data file.</i>",
+            "encodingFormat": "text/html",
+            "humanReadableSize": "1.30 MB",
+            "name": "report_PBE45781_20250929_1357_84291f8c.html",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/report_PBE45781_20250929_1357_84291f8c.json",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "Machine-readable report containing instrument metadata and execution parameters.",
+            "encodingFormat": "application/json",
+            "humanReadableSize": "10.00 B",
+            "name": "report_PBE45781_20250929_1357_84291f8c.json",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/sequencing_summary_PBE45781_84291f8c_26f25936.txt",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "Quantitative summary of the sequencing run, including read lengths and quality scores.",
+            "encodingFormat": "text/plain",
+            "humanReadableSize": "6.67 KB",
+            "name": "sequencing_summary_PBE45781_84291f8c_26f25936.txt",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/final_summary_PBE45781_84291f8c_26f25936.txt",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "Text-based summary of the final basecalling and run metrics.",
+            "encodingFormat": "text/plain",
+            "humanReadableSize": "738.00 B",
+            "name": "final_summary_PBE45781_84291f8c_26f25936.txt",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/other_reports/",
+            "@type": "Dataset",
+            "description": "Directory containing <b>other_reports</b> data.",
+            "hasPart": [
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/other_reports/pore_scan_data_PBE45781_84291f8c_26f25936.csv"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/other_reports/temperature_adjust_data_PBE45781_84291f8c_26f25936.csv"
+                }
+            ],
+            "humanReadableSize": "5.27 KB",
+            "name": "other_reports"
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/other_reports/pore_scan_data_PBE45781_84291f8c_26f25936.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Tabular data file containing quantitative results and analysis outputs.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "4.84 KB",
+            "name": "pore_scan_data_PBE45781_84291f8c_26f25936.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/other_reports/temperature_adjust_data_PBE45781_84291f8c_26f25936.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Tabular data file containing quantitative results and analysis outputs.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "444.00 B",
+            "name": "temperature_adjust_data_PBE45781_84291f8c_26f25936.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/pod5/",
+            "@type": "Dataset",
+            "description": "Directory containing <b>pod5</b> data.",
+            "hasPart": [
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/pod5/PBE45781_84291f8c_26f25936_78.pod5"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/pod5/PBE45781_84291f8c_26f25936_79.pod5"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/pod5/pass/"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/pod5/basecalling/"
+                }
+            ],
+            "humanReadableSize": "2.72 KB",
+            "name": "pod5"
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/pod5/PBE45781_84291f8c_26f25936_78.pod5",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "Represent raw signal data captured by the Nanopore device, used for quality control and re-basecalling.",
+            "encodingFormat": {
+                "@id": "#pod5-format"
+            },
+            "humanReadableSize": "1.64 KB",
+            "name": "PBE45781_84291f8c_26f25936_78.pod5",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/pod5/PBE45781_84291f8c_26f25936_79.pod5",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "Represent raw signal data captured by the Nanopore device, used for quality control and re-basecalling.",
+            "encodingFormat": {
+                "@id": "#pod5-format"
+            },
+            "humanReadableSize": "1.09 KB",
+            "name": "PBE45781_84291f8c_26f25936_79.pod5",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/pod5/pass/",
+            "@type": "Dataset",
+            "description": "Directory containing <b>pass</b> data.",
+            "hasPart": [
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/pod5/pass/fastq_runid_26f25936952b009c7c9e44bf5f825d313f73d96f_9_18.fastq.gz"
+                }
+            ],
+            "humanReadableSize": "5.08 KB",
+            "name": "pass"
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/pod5/pass/fastq_runid_26f25936952b009c7c9e44bf5f825d313f73d96f_9_18.fastq.gz",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Gzipped FASTQ files generated by Oxford Nanopore PromethION basecalling.</i>",
+            "encodingFormat": {
+                "@id": "#fastq-gz-format"
+            },
+            "humanReadableSize": "5.08 KB",
+            "name": "fastq_runid_26f25936952b009c7c9e44bf5f825d313f73d96f_9_18.fastq.gz",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/pod5/basecalling/",
+            "@type": "Dataset",
+            "description": "Directory containing <b>basecalling</b> data.",
+            "hasPart": [
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/pod5/basecalling/sequece_summary.txt"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/pod5/basecalling/ont_basecall_client_log-2025-10-28_19-20-45.log"
+                }
+            ],
+            "humanReadableSize": "8.18 KB",
+            "name": "basecalling"
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/pod5/basecalling/sequece_summary.txt",
+            "@type": "File",
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Text-based file containing metadata and analysis outputs for data sharing.</i>",
+            "encodingFormat": "text/plain",
+            "humanReadableSize": "5.31 KB",
+            "name": "sequece_summary.txt",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/pod5/basecalling/ont_basecall_client_log-2025-10-28_19-20-45.log",
+            "@type": "File",
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Validated text/plain data file.</i>",
+            "encodingFormat": "text/plain",
+            "humanReadableSize": "2.87 KB",
+            "name": "ont_basecall_client_log-2025-10-28_19-20-45.log",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/fastq_pass/",
+            "@type": "Dataset",
+            "description": "Directory containing <b>fastq_pass</b> data.",
+            "hasPart": [
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/fastq_pass/PBE45781_pass_84291f8c_26f25936_75.fastq.gz"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/fastq_pass/PBE45781_pass_84291f8c_26f25936_76.fastq.gz"
+                }
+            ],
+            "humanReadableSize": "6.33 KB",
+            "name": "fastq_pass"
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/fastq_pass/PBE45781_pass_84291f8c_26f25936_75.fastq.gz",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Gzipped FASTQ files generated by Oxford Nanopore PromethION basecalling.</i>",
+            "encodingFormat": {
+                "@id": "#fastq-gz-format"
+            },
+            "humanReadableSize": "4.23 KB",
+            "name": "PBE45781_pass_84291f8c_26f25936_75.fastq.gz",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/fastq_pass/PBE45781_pass_84291f8c_26f25936_76.fastq.gz",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Gzipped FASTQ files generated by Oxford Nanopore PromethION basecalling.</i>",
+            "encodingFormat": {
+                "@id": "#fastq-gz-format"
+            },
+            "humanReadableSize": "2.10 KB",
+            "name": "PBE45781_pass_84291f8c_26f25936_76.fastq.gz",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/fastq_fail/",
+            "@type": "Dataset",
+            "description": "Directory containing <b>fastq_fail</b> data.",
+            "hasPart": [
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/fastq_fail/PBE45781_fail_84291f8c_26f25936_94.fastq.gz"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/fastq_fail/PBE45781_fail_84291f8c_26f25936_95.fastq.gz"
+                },
+                {
+                    "@id": "20250929_ORID0085C/Pich31-12-24/fastq_fail/PBE45781_fail_84291f8c_26f25936_96.fastq.gz"
+                }
+            ],
+            "humanReadableSize": "12.63 KB",
+            "name": "fastq_fail"
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/fastq_fail/PBE45781_fail_84291f8c_26f25936_94.fastq.gz",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Gzipped FASTQ files generated by Oxford Nanopore PromethION basecalling.</i>",
+            "encodingFormat": {
+                "@id": "#fastq-gz-format"
+            },
+            "humanReadableSize": "4.08 KB",
+            "name": "PBE45781_fail_84291f8c_26f25936_94.fastq.gz",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/fastq_fail/PBE45781_fail_84291f8c_26f25936_95.fastq.gz",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Gzipped FASTQ files generated by Oxford Nanopore PromethION basecalling.</i>",
+            "encodingFormat": {
+                "@id": "#fastq-gz-format"
+            },
+            "humanReadableSize": "4.96 KB",
+            "name": "PBE45781_fail_84291f8c_26f25936_95.fastq.gz",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/Pich31-12-24/fastq_fail/PBE45781_fail_84291f8c_26f25936_96.fastq.gz",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Gzipped FASTQ files generated by Oxford Nanopore PromethION basecalling.</i>",
+            "encodingFormat": {
+                "@id": "#fastq-gz-format"
+            },
+            "humanReadableSize": "3.59 KB",
+            "name": "PBE45781_fail_84291f8c_26f25936_96.fastq.gz",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/LIS14-11-24/",
+            "@type": "Dataset",
+            "description": "Directory containing <b>LIS14-11-24</b> data.",
+            "hasPart": [
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/"
+                }
+            ],
+            "name": "LIS14-11-24"
+        },
+        {
+            "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/",
+            "@type": "Dataset",
+            "description": "Directory containing <b>20250929_1351_2E_PBG11294_16ee63fc</b> data.",
+            "hasPart": [
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/final_summary_PBG11294_16ee63fc_0af2d590.txt"
+                },
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/sequencing_summary_PBG11294_16ee63fc_0af2d590.txt"
+                },
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/other_reports/"
+                },
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/pod5/"
+                },
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/fastq_pass/"
+                }
+            ],
+            "humanReadableSize": "17.46 KB",
+            "name": "20250929_1351_2E_PBG11294_16ee63fc"
+        },
+        {
+            "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/final_summary_PBG11294_16ee63fc_0af2d590.txt",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "Text-based summary of the final basecalling and run metrics.",
+            "encodingFormat": "text/plain",
+            "humanReadableSize": "812.00 B",
+            "name": "final_summary_PBG11294_16ee63fc_0af2d590.txt",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/sequencing_summary_PBG11294_16ee63fc_0af2d590.txt",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "Quantitative summary of the sequencing run, including read lengths and quality scores.",
+            "encodingFormat": "text/plain",
+            "humanReadableSize": "16.67 KB",
+            "name": "sequencing_summary_PBG11294_16ee63fc_0af2d590.txt",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/other_reports/",
+            "@type": "Dataset",
+            "description": "Directory containing <b>other_reports</b> data.",
+            "hasPart": [
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/other_reports/temperature_adjust_data_PBG11294_16ee63fc_0af2d590.csv"
+                },
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/other_reports/pore_scan_data_PBG11294_16ee63fc_0af2d590.csv"
+                }
+            ],
+            "humanReadableSize": "63.23 KB",
+            "name": "other_reports"
+        },
+        {
+            "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/other_reports/temperature_adjust_data_PBG11294_16ee63fc_0af2d590.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Tabular data file containing quantitative results and analysis outputs.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "130.00 B",
+            "name": "temperature_adjust_data_PBG11294_16ee63fc_0af2d590.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/other_reports/pore_scan_data_PBG11294_16ee63fc_0af2d590.csv",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Tabular data file containing quantitative results and analysis outputs.</i>",
+            "encodingFormat": "text/csv",
+            "humanReadableSize": "63.10 KB",
+            "name": "pore_scan_data_PBG11294_16ee63fc_0af2d590.csv",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/pod5/",
+            "@type": "Dataset",
+            "description": "Directory containing <b>pod5</b> data.",
+            "hasPart": [
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/pod5/PBG11294_16ee63fc_0af2d590_2.pod5"
+                },
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/pod5/PBG11294_16ee63fc_0af2d590_1.pod5"
+                },
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/pod5/PBG11294_16ee63fc_0af2d590_0.pod5"
+                }
+            ],
+            "humanReadableSize": "3.53 KB",
+            "name": "pod5"
+        },
+        {
+            "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/pod5/PBG11294_16ee63fc_0af2d590_2.pod5",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "Represent raw signal data captured by the Nanopore device, used for quality control and re-basecalling.",
+            "encodingFormat": {
+                "@id": "#pod5-format"
+            },
+            "humanReadableSize": "1.08 KB",
+            "name": "PBG11294_16ee63fc_0af2d590_2.pod5",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/pod5/PBG11294_16ee63fc_0af2d590_1.pod5",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "Represent raw signal data captured by the Nanopore device, used for quality control and re-basecalling.",
+            "encodingFormat": {
+                "@id": "#pod5-format"
+            },
+            "humanReadableSize": "1001.00 B",
+            "name": "PBG11294_16ee63fc_0af2d590_1.pod5",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/pod5/PBG11294_16ee63fc_0af2d590_0.pod5",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "Represent raw signal data captured by the Nanopore device, used for quality control and re-basecalling.",
+            "encodingFormat": {
+                "@id": "#pod5-format"
+            },
+            "humanReadableSize": "1.47 KB",
+            "name": "PBG11294_16ee63fc_0af2d590_0.pod5",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/fastq_pass/",
+            "@type": "Dataset",
+            "description": "Directory containing <b>fastq_pass</b> data.",
+            "hasPart": [
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/fastq_pass/PBG11294_pass_16ee63fc_0af2d590_2.fastq.gz"
+                },
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/fastq_pass/PBG11294_pass_16ee63fc_0af2d590_1.fastq.gz"
+                },
+                {
+                    "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/fastq_pass/PBG11294_pass_16ee63fc_0af2d590_0.fastq.gz"
+                }
+            ],
+            "humanReadableSize": "6.58 KB",
+            "name": "fastq_pass"
+        },
+        {
+            "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/fastq_pass/PBG11294_pass_16ee63fc_0af2d590_2.fastq.gz",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Gzipped FASTQ files generated by Oxford Nanopore PromethION basecalling.</i>",
+            "encodingFormat": {
+                "@id": "#fastq-gz-format"
+            },
+            "humanReadableSize": "1.97 KB",
+            "name": "PBG11294_pass_16ee63fc_0af2d590_2.fastq.gz",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/fastq_pass/PBG11294_pass_16ee63fc_0af2d590_1.fastq.gz",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Gzipped FASTQ files generated by Oxford Nanopore PromethION basecalling.</i>",
+            "encodingFormat": {
+                "@id": "#fastq-gz-format"
+            },
+            "humanReadableSize": "3.81 KB",
+            "name": "PBG11294_pass_16ee63fc_0af2d590_1.fastq.gz",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        },
+        {
+            "@id": "20250929_ORID0085C/LIS14-11-24/20250929_1351_2E_PBG11294_16ee63fc/fastq_pass/PBG11294_pass_16ee63fc_0af2d590_0.fastq.gz",
+            "@type": "File",
+            "actionProcess": {
+                "@id": "#nanopore-sequencing-activity"
+            },
+            "creator": {
+                "@id": "#lage"
+            },
+            "description": "<i>Gzipped FASTQ files generated by Oxford Nanopore PromethION basecalling.</i>",
+            "encodingFormat": {
+                "@id": "#fastq-gz-format"
+            },
+            "humanReadableSize": "809.00 B",
+            "name": "PBG11294_pass_16ee63fc_0af2d590_0.fastq.gz",
+            "wasGeneratedBy": {
+                "@id": "#Crate_Generator"
+            }
+        }
+    ]
+}

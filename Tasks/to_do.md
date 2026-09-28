@@ -1,7 +1,0 @@
-- Update the read_me in order to explain what each code can do
-- implement script for searching json files based on sample_id and reconstruct history of a sample
-- improve the Ro-crate creator to add metadata ad those that are retrivable from extcistin extractor. validate ro-crate in the ro-crate playground.
-- investigate extractors in Novaseq folder, the last commited .csv is skipped (not recognized): fix this
-- investigate how to do ro-crate and extractors for Nanopore samplesheet (instrument: Oxford Nanopore PromethION)
-- check ro-crate tools and tutorial:  https://www.researchobject.org/packaging_data_with_ro-crate/
-- check this:  https://gitlab.com/area7/datacenter/codes/genomics-pipeline
