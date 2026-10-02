@@ -12,7 +12,7 @@ authors:
   - family-names: Tsoptio Fougang
     given-names: Lesly
     affiliation: "SISSA & Area Science Park, Trieste, Italy"
-repository-code: "https://github.com/RitAreaSciencePark/LAGE_Metadata_Extraction"
+repository-code: "https://github.com/RitAreaSciencePark/Metadata_Extraction/tree/main"
 license: MIT
 version: "1.0.0"
 date-released: "2026-06-18"
