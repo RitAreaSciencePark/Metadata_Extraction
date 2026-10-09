@@ -5,6 +5,7 @@
 # SPDX-License-Identifier: MIT
 
 import argparse
+import copy
 import os
 import re
 import datetime
@@ -250,6 +251,322 @@ def classify_scout_file(filename, rel_path, ext, simulation_activity, sarek_acti
     return None, f"<i>SCOUT dataset file{context}.</i>"
 
 
+# ====================================================================== #
+#  FORGE accessibility / interoperability layer                          #
+#                                                                          #
+#  Adds a second description of the same dataset directly into this      #
+#  RO-Crate's own @graph: not what the dataset IS (that's everything      #
+#  above), but where a copy of it can be found across federated          #
+#  infrastructures, how it's reached, and what processing services can   #
+#  operate on it from there. See "FORGE: Guidelines for Packaging        #
+#  Dataset Accessibility and Interoperability Metadata" (SPN01 reference  #
+#  model). Modeled with existing schema.org types rather than invented    #
+#  properties, so it's navigable like any other part of the crate:        #
+#    site                -> Organization                                  #
+#    access point        -> DataDownload, linked via dataset.distribution #
+#    processing service  -> Service, linked via provider to its site      #
+#    Rucio DID           -> PropertyValue under dataset.identifier        #
+# ====================================================================== #
+
+# Plain, editable data -- not code -- so adding a site, changing an
+# endpoint, or flipping a planned service to live doesn't require
+# touching add_interoperability_layer() below. Override entirely via
+# --sites-config, or edit this default directly.
+#
+# String values may use the "{dataset_id}" placeholder, filled in per
+# dataset (e.g. an S3 bucket or EOS path named after the dataset, as in
+# the FORGE document's own examples).
+#
+# Per the document's "do not encode unknown information" principle, any
+# access point or processing service not actually available yet must be
+# written as {"status": "planned"} with protocol/endpoint/path left out
+# -- this is enforced by _validate_forge_entry() below, not just followed
+# by convention.
+DEFAULT_SITE_REGISTRY = {
+    "orfeo": {
+        # Reuse the #orfeo Organization entity already created above
+        # (with its Area Science Park parentOrganization relation)
+        # rather than creating a second, duplicate one.
+        "org_id": "#orfeo",
+        "data_access": [
+            {
+                # ORFEO S3 endpoint and bucket. The bucket path is a
+                # prefix plus the dataset id, so SPN01 resolves to
+                # "valerio-piomponi-scout/SPN01". Override via
+                # --sites-config for datasets stored elsewhere.
+                "protocol": "S3",
+                "endpoint": "https://buckets.areasciencepark.it",
+                "bucket": "valerio-piomponi-scout/{dataset_id}",
+            }
+        ],
+        "processing_services": [],
+    },
+    "cern": {
+        "org": {
+            "name": "CERN",
+            "description": "European Organization for Nuclear Research; hosts a "
+                           "replica of this dataset in the EOS/Rucio-managed filesystem.",
+            "url": "https://home.cern/",
+        },
+        "data_access": [
+            # "EOS" is CERN's storage system, not an access protocol -- the
+            # two shouldn't be conflated under one "protocol" label. Kept
+            # as a separate "storage_system" key so each gets its own,
+            # correctly-labelled PropertyValue (see add_interoperability_
+            # layer below). The actual access protocol onto EOS isn't
+            # specified here yet either -- add a "protocol" key once known.
+            {"storage_system": "EOS", "path": "/eos/eosc/rucio/{dataset_id}"}
+        ],
+        "processing_services": [
+            # No "endpoint" on these two services: their URLs are going
+            # to change soon, so none is recorded for now.
+            {
+                "id": "cern-vre",
+                "name": "CERN VRE (Virtual Research Environment)",
+                "type": "interactive-compute",
+            },
+            {
+                "id": "cern-reana",
+                "name": "CERN REANA",
+                "type": "workflow-execution",
+                "workflow_engines": ["Snakemake"],
+            },
+        ],
+    },
+    # Provisional id: the source document itself flags this site's name
+    # as undecided (alternatives raised: "ISCS", "the Bari infrastructure
+    # Rucio connects to"). Using the document's own example id until
+    # that's settled -- rename here (or via --sites-config) once it is,
+    # since this id becomes this entity's permanent @id.
+    #
+    # No "data_access" entry: this site is a catalogue/discovery/access
+    # node, not itself a physical location holding a replica of SPN01.
+    # The future Italian storage replica is expected to be provided via
+    # StoRM in Bari, whose technical details (endpoint, protocol) aren't
+    # known yet -- so, per "do not encode unknown information", there's
+    # nothing to represent as a DataDownload here until that's settled,
+    # rather than a half-specified placeholder entity for a site that
+    # doesn't have an id of its own yet either.
+    "italian-eosc-node": {
+        "org": {
+            "name": "Italian EOSC Node",
+            "description": "Catalogue, discovery and access node for the Italian "
+                           "EOSC infrastructure. Does not itself hold a physical "
+                           "replica of this dataset -- the future Italian storage "
+                           "replica is expected to be provided via StoRM in Bari, "
+                           "whose technical details are not yet known.",
+        },
+        "processing_services": [
+            {
+                "id": "italian-galaxy",
+                "name": "Italian EOSC Node Galaxy",
+                "type": "workflow-execution",
+                "workflow_engines": ["Nextflow"],
+                "status": "planned",
+            }
+        ],
+    },
+}
+
+
+class ForgeValidationError(ValueError):
+    """Raised when a FORGE access point or processing service mixes real
+    values with 'planned' status, or claims to be available without
+    actually specifying how."""
+
+
+def _fill_forge_templates(value, dataset_id):
+    """Recursively replace '{dataset_id}' in any string found in value."""
+    if isinstance(value, str):
+        return value.replace("{dataset_id}", dataset_id)
+    if isinstance(value, list):
+        return [_fill_forge_templates(v, dataset_id) for v in value]
+    if isinstance(value, dict):
+        return {k: _fill_forge_templates(v, dataset_id) for k, v in value.items()}
+    return value
+
+
+def _validate_forge_entry(site_id, kind, entry):
+    """Enforce: either an entry is fully specified (a protocol and/or a
+    storage system, plus a way to reach it), or it's explicitly marked
+    planned with nothing guessed in -- never a half-specified in-between.
+    "protocol" (e.g. S3) and "storage_system" (e.g. EOS) are kept as two
+    distinct, optional descriptors -- a storage system name is not an
+    access protocol, and a site may specify either, both, or (while
+    planned) neither."""
+    status = entry.get("status")
+    location_keys = ("endpoint", "path", "bucket")
+    has_location = any(entry.get(k) not in (None, "") for k in location_keys)
+    has_descriptor = (
+        entry.get("protocol") not in (None, "")
+        or entry.get("storage_system") not in (None, "")
+    )
+
+    if status == "planned":
+        if has_descriptor or has_location:
+            raise ForgeValidationError(
+                f"{site_id}: {kind} is marked 'planned' but also specifies "
+                f"a protocol/storage_system/location ({entry}). Planned "
+                f"entries must leave those fields unset."
+            )
+    else:
+        if kind == "data_access" and not (has_descriptor and has_location):
+            raise ForgeValidationError(
+                f"{site_id}: {kind} is not marked 'planned' but is missing "
+                f"a protocol/storage_system or a location ({entry}). Either "
+                f"fill in real values, or mark it {{'status': 'planned'}} instead."
+            )
+        # A live processing service may omit its endpoint (for example
+        # when the URL is about to change), so none is required here.
+
+
+def load_site_registry(sites_config_path):
+    """Load a site registry from a JSON file, falling back to the built-in
+    defaults when no override is given."""
+    if not sites_config_path:
+        return copy.deepcopy(DEFAULT_SITE_REGISTRY)
+    with open(sites_config_path, "r") as f:
+        return json.load(f)
+
+
+def _add_property_value(crate, parent_id, suffix, name, value, property_id=None):
+    """
+    Create a PropertyValue as its own addressable entity (rather than an
+    inline/anonymous object) and return a {"@id": ...} reference to it.
+    The rocrate library requires every nested object to be a real entity
+    reference -- which also happens to be the more RO-Crate-idiomatic
+    pattern: each value is its own graph node, individually inspectable
+    in a viewer, rather than a blank node buried inside another entity.
+
+    'name' is the human-readable label shown by viewers (e.g. the RO-Crate
+    playground renders additionalProperty entries as "{name}: {value}");
+    'property_id' is an optional short machine key, defaulting to 'name'
+    lowercased if not given separately.
+    """
+    pv_id = f"{parent_id}-{suffix}"
+    pv = crate.add(ContextEntity(crate, pv_id, properties={
+        "@type": "PropertyValue",
+        "name": name,
+        "propertyID": property_id or name,
+        "value": value,
+    }))
+    return {"@id": pv.id}
+
+
+def add_interoperability_layer(crate, dataset_id, rucio_scope, site_registry):
+    """
+    Add the FORGE accessibility/interoperability layer to this RO-Crate's
+    own @graph, as described in the module docstring above.
+    """
+    scope_value = rucio_scope if rucio_scope else "Unspecified_scope"
+    distribution_ids = []
+
+    for site_id, site_def in site_registry.items():
+        filled = _fill_forge_templates(site_def, dataset_id)
+
+        org_id = filled.get("org_id")
+        if org_id:
+            existing = crate.dereference(org_id)
+            site_display_name = existing.get("name", site_id) if existing else site_id
+            site_org_id = org_id
+        else:
+            org_info = filled.get("org", {})
+            site_display_name = org_info.get("name", site_id)
+            org_props = {"@type": "Organization", "name": site_display_name}
+            if org_info.get("description"):
+                org_props["description"] = org_info["description"]
+            if org_info.get("url"):
+                org_props["url"] = org_info["url"]
+            org_entity = crate.add(ContextEntity(crate, f"#{site_id}", properties=org_props))
+            site_org_id = org_entity.id
+
+        # Access points actually reachable at this site (i.e. not
+        # "planned") -- collected so processing services below can be
+        # linked to what they can actually operate on. A planned, not-yet-
+        # reachable access point gives a service nothing real to act on
+        # yet, so it's deliberately left out of this list.
+        site_live_access_points = []
+
+        for i, ap in enumerate(filled.get("data_access", [])):
+            _validate_forge_entry(site_id, "data_access", ap)
+            dd_id = f"#{site_id}-access" if i == 0 else f"#{site_id}-access-{i}"
+            dd_props = {
+                "@type": "DataDownload",
+                "name": f"{dataset_id} access point at {site_display_name}",
+                "provider": {"@id": site_org_id},
+            }
+            is_planned = ap.get("status") == "planned"
+            if is_planned:
+                dd_props["additionalProperty"] = [
+                    _add_property_value(crate, dd_id, "status", "Status", "planned")
+                ]
+            else:
+                additional = []
+                if ap.get("protocol"):
+                    additional.append(_add_property_value(
+                        crate, dd_id, "protocol", "Protocol", ap["protocol"],
+                        property_id="protocol"))
+                if ap.get("storage_system"):
+                    additional.append(_add_property_value(
+                        crate, dd_id, "storage-system", "Storage system", ap["storage_system"],
+                        property_id="storageSystem"))
+                if ap.get("endpoint"):
+                    dd_props["contentUrl"] = ap["endpoint"]
+                if ap.get("path"):
+                    additional.append(_add_property_value(crate, dd_id, "path", "Path", ap["path"]))
+                if ap.get("bucket"):
+                    additional.append(
+                        _add_property_value(crate, dd_id, "bucket", "Bucket", ap["bucket"]))
+                dd_props["additionalProperty"] = additional
+            dd_entity = crate.add(ContextEntity(crate, dd_id, properties=dd_props))
+            distribution_ids.append({"@id": dd_entity.id})
+            if not is_planned:
+                site_live_access_points.append(dd_entity)
+
+        for svc in filled.get("processing_services", []):
+            _validate_forge_entry(site_id, "processing_service", svc)
+            svc_id = f"#{svc['id']}"
+            svc_props = {
+                "@type": "Service",
+                "name": svc.get("name", svc["id"]),
+                "provider": {"@id": site_org_id},
+            }
+            svc_type = svc.get("type", "")
+            additional = [
+                _add_property_value(crate, svc_id, "service-type", "Service Type", svc_type)
+            ]
+            if svc.get("endpoint"):
+                svc_props["url"] = svc["endpoint"]
+            if svc.get("workflow_engines"):
+                additional.append(_add_property_value(
+                    crate, svc_id, "workflow-engines", "Workflow Engines",
+                    ", ".join(svc["workflow_engines"])))
+            svc_is_planned = svc.get("status") == "planned"
+            if svc_is_planned:
+                additional.append(_add_property_value(crate, svc_id, "status", "Status", "planned"))
+            svc_props["additionalProperty"] = additional
+
+            # Compute/data relationship: point this service at the access
+            # point(s) holding the data it can process at this site,
+            # directly on the Service entity. The service does not store
+            # the data, it only processes it, so the property is named
+            # after what the service does, not after storage. Skipped for
+            # a planned service or a planned access point: neither has
+            # anything real to link yet.
+            # NOTE: "processesData" is a custom term, not a schema.org
+            # property.
+            if not svc_is_planned and site_live_access_points:
+                refs = [{"@id": dd.id} for dd in site_live_access_points]
+                svc_props["processesData"] = refs[0] if len(refs) == 1 else refs
+
+            crate.add(ContextEntity(crate, svc_id, properties=svc_props))
+
+    crate.root_dataset["distribution"] = distribution_ids
+    crate.root_dataset["identifier"] = _add_property_value(
+        crate, "#dataset", "rucio-did", "Rucio DID", f"{scope_value}:{dataset_id}",
+        property_id="rucioDID")
+
+
 def get_readable_file_size(size_in_bytes):
     """Convert bytes to a human-readable string (e.g., '1.20 MB')."""
     for unit in ['B', 'KB', 'MB', 'GB']:
@@ -270,7 +587,7 @@ def get_recursive_directory_size(directory_path):
     return total_size
 
 
-def generate_folder_rocrate(input_folder):
+def generate_folder_rocrate(input_folder, rucio_scope=None, sites_config_path=None):
 
     # ------------------------------------------------------------------ #
     #  Specific descriptions keyed on Nanopore file sub-type strings      #
@@ -510,8 +827,14 @@ def generate_folder_rocrate(input_folder):
         "parentOrganization": {"@id": area_science_park.id},
         "url": "https://orfeo-doc.areasciencepark.it/"
     }))
-    # schema.org has no dedicated "hostedBy"; publisher is the closest term.
-    crate.root_dataset["publisher"] = {"@id": orfeo.id}
+    # ORFEO's role as a host (not a publisher) is captured by the FORGE
+    # "distribution"/DataDownload layer below, not by root_dataset.publisher.
+
+    # ------------------------------------------------------------------ #
+    #  FORGE accessibility / interoperability layer                       #
+    # ------------------------------------------------------------------ #
+    site_registry = load_site_registry(sites_config_path)
+    add_interoperability_layer(crate, input_folder_name, rucio_scope, site_registry)
 
     # ------------------------------------------------------------------ #
     #  Software entities                                                   #
@@ -636,15 +959,29 @@ def generate_folder_rocrate(input_folder):
     simulation_activity = None
     sarek_activity = None
     if is_scout:
-        scout_publication = crate.add(ContextEntity(crate, "#scout-publication", properties={
-            "@type": "ScholarlyArticle",
-            "name": "Tumour evolution as ground truth for cancer whole-genome sequencing",
-            "author": "Valeriani, Gandolfi, Buscaroli, et al.",
-            "identifier": "https://doi.org/10.64898/2026.06.09.731105",
-            "url": "https://doi.org/10.64898/2026.06.09.731105",
-            "datePublished": "2026-06-11",
-        }))
+        # @id is the DOI itself (an absolute URI), not a local "#..." id --
+        # RO-Crate requires a citation target's @id to be an absolute URI.
+        scout_publication = crate.add(ContextEntity(
+            crate, "https://doi.org/10.64898/2026.06.09.731105", properties={
+                "@type": "ScholarlyArticle",
+                "name": "Tumour evolution as ground truth for cancer whole-genome sequencing",
+                "author": "Valeriani, Gandolfi, Buscaroli, et al.",
+                "identifier": "https://doi.org/10.64898/2026.06.09.731105",
+                "url": "https://doi.org/10.64898/2026.06.09.731105",
+                "datePublished": "2026-06-11",
+            }))
         crate.root_dataset["citation"] = {"@id": scout_publication.id}
+        caravagna_lab = crate.add(ContextEntity(crate, "https://www.caravagnalab.org/", properties={
+            "@type": "Organization",
+            "name": "Cancer Data Science Laboratory (Caravagna Lab)",
+            "description": "Research group led by Giulio Caravagna, University of "
+                           "Trieste; authored the SCOUT dataset and the ProCESS "
+                           "simulator used to generate it.",
+            "url": "https://www.caravagnalab.org/",
+        }))
+        # The lab that produced/released this dataset -- distinct from
+        # ORFEO, which only hosts a copy of it (see "distribution" below).
+        crate.root_dataset["publisher"] = {"@id": caravagna_lab.id}
         process_software = crate.add(ContextEntity(crate, "#process-simulator", properties={
             "@type": "SoftwareApplication",
             "name": "ProCESS (Programmable Cancer Evolution Spatial Simulator)",
@@ -779,8 +1116,8 @@ def generate_folder_rocrate(input_folder):
         "description": (
             "<p>Main data directory containing outputs from the following phases:</p>"
             f"{types_html}"
-            "<p>This dataset includes:</p>"
-            f"{file_summary_html}"
+           # "<p>This dataset includes:</p>"
+           # f"{file_summary_html}"
         ),
         "hasPart": [],
     }))
@@ -789,7 +1126,7 @@ def generate_folder_rocrate(input_folder):
             folder_entity["identifier"] = spn_id
         if cancer_type:
             folder_entity["about"] = cancer_type
-        folder_entity["citation"] = {"@id": "#scout-publication"}
+        folder_entity["citation"] = {"@id": scout_publication.id}
     crate.root_dataset["hasPart"] = [{"@id": folder_id}]
 
     # ------------------------------------------------------------------ #
@@ -1061,7 +1398,7 @@ def generate_folder_rocrate(input_folder):
                     "@type": "File",
                     "description": custom_description,
                     "creator": {"@id": lage.id},
-                    "encodingFormat": encoding_value,  # FIX 4
+                    "encodingFormat": encoding_value, 
                     "humanReadableSize": readable_size,
                     "wasGeneratedBy": {"@id": ro_crate_script.id},
                 })
@@ -1178,10 +1515,34 @@ def generate_folder_rocrate(input_folder):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generate RO-Crate with RO-Crate 1.2 compliance.")
+    parser = argparse.ArgumentParser(
+        description="Generate an RO-Crate 1.2 description of a dataset folder, "
+                    "including its scientific metadata/provenance and its FORGE "
+                    "accessibility/interoperability layer."
+    )
     parser.add_argument("folder_path", help="The root folder to scan.")
+    parser.add_argument(
+        "--rucio-scope",
+        default=None,
+        help="Rucio DID scope (e.g. 'lage'). Left as '<scope>' placeholder "
+             "if not given -- this is intentionally configurable, not fixed.",
+    )
+    parser.add_argument(
+        "--sites-config",
+        default=None,
+        help="Path to a JSON file overriding the built-in FORGE site registry "
+             "(same shape as DEFAULT_SITE_REGISTRY in this script). If "
+             "omitted, the built-in defaults are used.",
+    )
     args = parser.parse_args()
     if os.path.isdir(args.folder_path):
-        generate_folder_rocrate(args.folder_path)
+        try:
+            generate_folder_rocrate(
+                args.folder_path,
+                rucio_scope=args.rucio_scope,
+                sites_config_path=args.sites_config,
+            )
+        except ForgeValidationError as e:
+            print(f"❌ FORGE metadata validation failed: {e}")
     else:
         print(f"❌ Error: {args.folder_path} is not a valid directory.")
