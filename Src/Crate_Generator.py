@@ -290,13 +290,21 @@ DEFAULT_SITE_REGISTRY = {
         "org_id": "#orfeo",
         "data_access": [
             {
-                # ORFEO S3 endpoint and bucket. The bucket path is a
-                # prefix plus the dataset id, so SPN01 resolves to
-                # "valerio-piomponi-scout/SPN01". Override via
-                # --sites-config for datasets stored elsewhere.
+                # ORFEO S3 access: endpoint, bucket and prefix are kept
+                # as separate values. The prefix is the dataset id, so
+                # SPN01 resolves to s3://valerio-piomponi-scout/SPN01/.
+                # Override via --sites-config for datasets stored
+                # elsewhere. "name", "description" and "encoding_format"
+                # are optional and only set the matching DataDownload
+                # properties.
+                "name": "{dataset_id} S3 access at ORFEO",
+                "description": "{dataset_id} dataset stored under an S3 prefix "
+                               "in the ORFEO Data Center.",
                 "protocol": "S3",
                 "endpoint": "https://buckets.areasciencepark.it",
-                "bucket": "valerio-piomponi-scout/{dataset_id}",
+                "bucket": "valerio-piomponi-scout",
+                "prefix": "{dataset_id}/",
+                "encoding_format": "application/octet-stream",
             }
         ],
         "processing_services": [],
@@ -318,17 +326,19 @@ DEFAULT_SITE_REGISTRY = {
             {"storage_system": "EOS", "path": "/eos/eosc/rucio/{dataset_id}"}
         ],
         "processing_services": [
-            # No "endpoint" on these two services: their URLs are going
-            # to change soon, so none is recorded for now.
+            # The URLs of these two services are going to change soon,
+            # so the endpoint is an explicit "To be announced" for now.
             {
                 "id": "cern-vre",
                 "name": "CERN VRE (Virtual Research Environment)",
                 "type": "interactive-compute",
+                "endpoint": "To be announced",
             },
             {
                 "id": "cern-reana",
                 "name": "CERN REANA",
                 "type": "workflow-execution",
+                "endpoint": "To be announced",
                 "workflow_engines": ["Snakemake"],
             },
         ],
@@ -395,7 +405,7 @@ def _validate_forge_entry(site_id, kind, entry):
     access protocol, and a site may specify either, both, or (while
     planned) neither."""
     status = entry.get("status")
-    location_keys = ("endpoint", "path", "bucket")
+    location_keys = ("endpoint", "path", "bucket", "prefix")
     has_location = any(entry.get(k) not in (None, "") for k in location_keys)
     has_descriptor = (
         entry.get("protocol") not in (None, "")
@@ -415,6 +425,12 @@ def _validate_forge_entry(site_id, kind, entry):
                 f"{site_id}: {kind} is not marked 'planned' but is missing "
                 f"a protocol/storage_system or a location ({entry}). Either "
                 f"fill in real values, or mark it {{'status': 'planned'}} instead."
+            )
+        if (kind == "data_access" and entry.get("protocol") == "S3"
+                and not (entry.get("endpoint") and entry.get("bucket"))):
+            raise ForgeValidationError(
+                f"{site_id}: S3 access point needs both an endpoint and a "
+                f"bucket ({entry})."
             )
         # A live processing service may omit its endpoint (for example
         # when the URL is about to change), so none is required here.
@@ -492,9 +508,11 @@ def add_interoperability_layer(crate, dataset_id, rucio_scope, site_registry):
             dd_id = f"#{site_id}-access" if i == 0 else f"#{site_id}-access-{i}"
             dd_props = {
                 "@type": "DataDownload",
-                "name": f"{dataset_id} access point at {site_display_name}",
+                "name": ap.get("name") or f"{dataset_id} access point at {site_display_name}",
                 "provider": {"@id": site_org_id},
             }
+            if ap.get("description"):
+                dd_props["description"] = ap["description"]
             is_planned = ap.get("status") == "planned"
             if is_planned:
                 dd_props["additionalProperty"] = [
@@ -502,21 +520,39 @@ def add_interoperability_layer(crate, dataset_id, rucio_scope, site_registry):
                 ]
             else:
                 additional = []
+                is_s3 = ap.get("protocol") == "S3"
                 if ap.get("protocol"):
                     additional.append(_add_property_value(
-                        crate, dd_id, "protocol", "Protocol", ap["protocol"],
-                        property_id="protocol"))
+                        crate, dd_id, "protocol", "Storage protocol", ap["protocol"],
+                        property_id="storageProtocol"))
                 if ap.get("storage_system"):
                     additional.append(_add_property_value(
                         crate, dd_id, "storage-system", "Storage system", ap["storage_system"],
                         property_id="storageSystem"))
-                if ap.get("endpoint"):
+                if is_s3:
+                    # S3: contentUrl is the s3:// URI of the prefix; the
+                    # HTTPS endpoint, bucket and prefix are separate values.
+                    prefix = ap.get("prefix") or ""
+                    if prefix and not prefix.endswith("/"):
+                        prefix += "/"
+                    dd_props["contentUrl"] = f"s3://{ap['bucket']}/{prefix}"
+                    additional.append(_add_property_value(
+                        crate, dd_id, "s3-endpoint", "S3 endpoint", ap["endpoint"],
+                        property_id="s3Endpoint"))
+                    additional.append(_add_property_value(
+                        crate, dd_id, "s3-bucket", "S3 bucket", ap["bucket"],
+                        property_id="s3Bucket"))
+                    if prefix:
+                        additional.append(_add_property_value(
+                            crate, dd_id, "s3-prefix", "S3 prefix", prefix,
+                            property_id="s3Prefix"))
+                elif ap.get("endpoint"):
                     dd_props["contentUrl"] = ap["endpoint"]
                 if ap.get("path"):
-                    additional.append(_add_property_value(crate, dd_id, "path", "Path", ap["path"]))
-                if ap.get("bucket"):
-                    additional.append(
-                        _add_property_value(crate, dd_id, "bucket", "Bucket", ap["bucket"]))
+                    additional.append(_add_property_value(
+                        crate, dd_id, "path", "Path", ap["path"], property_id="path"))
+                if ap.get("encoding_format"):
+                    dd_props["encodingFormat"] = ap["encoding_format"]
                 dd_props["additionalProperty"] = additional
             dd_entity = crate.add(ContextEntity(crate, dd_id, properties=dd_props))
             distribution_ids.append({"@id": dd_entity.id})
@@ -553,7 +589,7 @@ def add_interoperability_layer(crate, dataset_id, rucio_scope, site_registry):
             # after what the service does, not after storage. Skipped for
             # a planned service or a planned access point: neither has
             # anything real to link yet.
-            # NOTE: "processesData" is a custom term, not a schema.org
+            #  "processesData" is a custom term, not a schema.org
             # property.
             if not svc_is_planned and site_live_access_points:
                 refs = [{"@id": dd.id} for dd in site_live_access_points]
